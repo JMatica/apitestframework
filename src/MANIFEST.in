@@ -1,0 +1,4 @@
+graft apitestframework
+prune test*
+include setup.py requirements.txt
+global-exclude __pycache__ *.pyc

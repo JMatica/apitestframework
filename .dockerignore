@@ -1,0 +1,7 @@
+# Ignore everything
+**
+
+# Allow distribution files
+!src/dist/
+!src/requirements.txt
+!launch.sh

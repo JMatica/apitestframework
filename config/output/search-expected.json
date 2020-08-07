@@ -1,0 +1,17 @@
+{
+    "currency": "EUR",
+    "solutions": [
+        {
+            "solutionId": "32iuhr3782yr4e7283j",
+            "departureDateTime": "2019-03-02T12:20:00+02:00",
+            "arrivalDateTime": "2019-08-30T12:40:00+02:00",
+            "totalPrice": 180
+        },
+        {
+            "solutionId": "28endwqjf83oijewmdo",
+            "departureDateTime": "2019-03-03T13:15:00+02:00",
+            "arrivalDateTime": "2019-08-31T16:00:00+02:00",
+            "totalPrice": 210
+        }
+    ]
+}

@@ -1,0 +1,130 @@
+{
+    "logLevel": 20,
+    "headers": {
+        "Content-Type": {
+            "value": "application/json"
+        },
+        "Accept": {
+            "value": "application/json"
+        }
+    },
+    "suites": [
+        {
+            "name": "HOTEL_BOOKING",
+            "headers": {
+                "Authorization": {
+                    "value": "Basic {}",
+                    "envName": "API_TOKEN"
+                }
+            },
+            "envOverride": [
+                {
+                    "name": "baseUrl",
+                    "envName": "API_BASE_URL"
+                }
+            ],
+            "tests": [
+                {
+                    "name": "Status",
+                    "url": "/status",
+                    "expected": "output/status-expected.json"
+                },
+                {
+                    "name": "Search",
+                    "url": "/search",
+                    "method": "POST",
+                    "payload": {
+                        "currency": "EUR",
+                        "language": "en",
+                        "hotelCode": "09400",
+                        "arrivalDate": "2019-08-30",
+                        "departureDate": "2019-09-02",
+                        "guests": {
+                            "adult": 1,
+                            "child": 0,
+                            "infant": 0
+                        }
+                    },
+                    "expected": "output/search-expected.json",
+                    "extract": [
+                        {
+                            "name": "solutionId",
+                            "key": "solutions.0.solutionId"
+                        }
+                    ]
+                },
+                {
+                    "name": "Reservation",
+                    "url": "/reservation",
+                    "method": "POST",
+                    "payload": {
+                        "solutionId": null
+                    },
+                    "expected": "output/reservation-expected.json",
+                    "responseCheckExceptions": [
+                        {
+                            "key": "reservationId",
+                            "type": "exist"
+                        }
+                    ],
+                    "extract": [
+                        {
+                            "name": "reservationId",
+                            "key": "reservationId"
+                        }
+                    ],
+                    "inject": [
+                        {
+                            "name": "solutionId",
+                            "type": "body",
+                            "key": "solutionId"
+                        }
+                    ]
+                },
+                {
+                    "name": "Booking",
+                    "url": "/booking",
+                    "method": "POST",
+                    "payload": {
+                        "reservationId": null
+                    },
+                    "expected": "output/booking-expected.json",
+                    "responseCheckExceptions": [
+                        {
+                            "key": "bookingId",
+                            "type": "exist"
+                        }
+                    ],
+                    "extract": [
+                        {
+                            "name": "bookingId",
+                            "key": "bookingId"
+                        }
+                    ],
+                    "inject": [
+                        {
+                            "name": "reservationId",
+                            "type": "body",
+                            "key": "reservationId"
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete Booking",
+                    "url": "/booking",
+                    "method": "DELETE",
+                    "params": {
+                        "force": true
+                    },
+                    "expected": "output/deletebooking-expected.json",
+                    "inject": [
+                        {
+                            "name": "bookingId",
+                            "type": "path"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
